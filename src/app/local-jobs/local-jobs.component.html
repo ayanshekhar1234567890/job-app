@@ -1,0 +1,8 @@
+<div class="grid grid-cols-2 gap-4">
+  <div *ngFor="let gridItem of gridData">
+    <div class="p-4 border border-gray-300">
+      <h2 class="mb-2 text-lg font-medium">{{ gridItem.heading }}</h2>
+      <a href="{{ gridItem.url }}" class="text-blue-500">{{ gridItem.url }}</a>
+    </div>
+  </div>
+</div>

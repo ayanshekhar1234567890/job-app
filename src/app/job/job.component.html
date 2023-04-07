@@ -1,30 +1,14 @@
-<!-- ChatGPT helped me -->
-<div
-  class="flex items-center justify-center w-full h-full bg-gray-100 dark:bg-gray-900"
->
-  <div
-    class="w-full max-w-md px-4 py-6 rounded-md shadow-md bg-white dark:bg-gray-800 mt-2 mb-2"
-  >
-    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-      Available Jobs
-    </h2>
-    <div class="grid gap-4">
-      <div
-        *ngFor="let job of jobs; trackBy: trackByFn"
-        class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md p-4"
-      >
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
-          {{ job.job_title ?? job.job_job_title }}
-        </h3>
-        <p class="text-sm text-gray-700 dark:text-gray-300 mb-2">
-          {{ job.job_description }}
-        </p>
-        <a
-          href="{{ job.job_google_link }}"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mt-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-500 dark:focus:ring-offset-2"
-        >
+<div class="flex flex-col items-center justify-center h-screen">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <input type="text" class="px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Enter text here..." #input>
+    <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600" (click)="fetchJobs(input.value)">Submit</button>
+  </div>
+  <div class="w-full h-64 mt-4 border border-gray-400 rounded-lg">
+    <div class="grid grid-cols-3 gap-4 p-4">
+      <div *ngFor="let job of jobs" class="p-4 bg-white rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold">{{ job.job_title }}</h2>
+        <p class="text-gray-500">{{ job.job_description | titlecase }}</p>
+        <a href="{{ job.job_google_link }}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-500 dark:focus:ring-offset-2">
           Apply Now
         </a>
       </div>
