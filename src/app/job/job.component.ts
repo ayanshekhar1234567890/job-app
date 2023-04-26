@@ -19,9 +19,9 @@ export class JobComponent implements OnInit {
   }
 
   /**
-   * It will give a result of jobs
-   * @param text The text is the text from which the function can sort jobs
-   * @returns {void}
+   * This function returns a set of jobs by filterig the jobs from the jobs api using the `text` parameter.
+   * @param text This parameter helps to filter jobs from the api.
+   * @todo Add a increment-type thing in which once the user searches 1 job the app will ask him money 200 Rs to get infinite jobs.
    */
   fetchJobs(text: string): void {
 
@@ -35,6 +35,7 @@ export class JobComponent implements OnInit {
       }
     };
 
+    /** */
     fetch(url, options)
       .then(res => res.json())
       .then(json => {
@@ -43,7 +44,15 @@ export class JobComponent implements OnInit {
          * Prints the `job_title` object from `json`.
          */
         json.data.forEach(({ job_title }: Job) => console.log(job_title));
+        /**
+         * @ayanshekhar1234567890
+         * Prints the `job_description` object from `json`.
+         */
         json.data.forEach(( { job_description }: Job) => console.log(job_description));
+        /**
+         * @ayanshekhar1234567890
+         * Prints the `job_google_link` object from `json`.
+         */
         json.data.forEach(({ job_google_link }: Job) => console.log(job_google_link));
         let jobsFetched = json.data.map(({ job_title, job_description, job_google_link }: Job) => ({
           job_title,
@@ -51,7 +60,9 @@ export class JobComponent implements OnInit {
           job_google_link
         }));
         localStorage.setItem('jobs', JSON.stringify(jobsFetched))
-        this.ngOnInit()
+        
+        window.location.reload();
+
       })
       .catch(err => console.error('error:' + err));
 
