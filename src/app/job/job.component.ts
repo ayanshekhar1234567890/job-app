@@ -1,71 +1,76 @@
-import { ChangeDetectorRef, Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  OnDestroy,
+  NgModule
+} from '@angular/core';
 import { Job } from './Job';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { loadStripe } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
   styleUrls: ['./job.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class JobComponent implements OnInit {
-
+export class JobComponent implements OnInit, OnDestroy {
   jobs!: Job[];
 
-  constructor(public changeDetectorRef: ChangeDetectorRef) {
-    this.jobs = JSON.parse(localStorage.getItem('jobs') ?? "[]");
+  constructor(public changeDetectorRef: ChangeDetectorRef, private http: HttpClient) {
+    this.jobs = JSON.parse(localStorage.getItem('jobs') ?? '[]');
+  }
+
+  ngOnDestroy(): void {
   }
 
   ngOnInit(): void {
   }
 
   /**
-   * This function returns a set of jobs by filterig the jobs from the jobs api using the `text` parameter.
-   * @param text This parameter helps to filter jobs from the api.
-   * @todo Add a increment-type thing in which once the user searches 1 job the app will ask him money 200 Rs to get infinite jobs.
-   */
-  fetchJobs(text: string): void {
-
+ * This function fetches jobs from an API and stores them in local storage.
+ * @param text The search query to filter jobs.
+ * @param changeDetectorRef The ChangeDetectorRef object to detect changes and update the UI.
+ */
+  async fetchJobs(text: string): Promise<void> {
     const url = `https://jsearch.p.rapidapi.com/search?query=${text}&page=1&num_pages=1`;
-
     const options = {
-      method: 'GET',
       headers: {
         'X-RapidAPI-Key': '5cf3ab5104msh8b2dc4fbca796c7p15d31ejsn73261ac3aeba',
         'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
       }
     };
 
-    /** */
-    fetch(url, options)
-      .then(res => res.json())
-      .then(json => {
-        /**
-         * @ayanshekhar1234567890
-         * Prints the `job_title` object from `json`.
-         */
-        json.data.forEach(({ job_title }: Job) => console.log(job_title));
-        /**
-         * @ayanshekhar1234567890
-         * Prints the `job_description` object from `json`.
-         */
-        json.data.forEach(( { job_description }: Job) => console.log(job_description));
-        /**
-         * @ayanshekhar1234567890
-         * Prints the `job_google_link` object from `json`.
-         */
-        json.data.forEach(({ job_google_link }: Job) => console.log(job_google_link));
-        let jobsFetched = json.data.map(({ job_title, job_description, job_google_link }: Job) => ({
-          job_title,
-          job_description,
-          job_google_link
-        }));
-        localStorage.setItem('jobs', JSON.stringify(jobsFetched))
-        
-        window.location.reload();
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      const jobs = data.data.map(({ job_title, job_description, job_google_link }: Job) => ({
+        job_title,
+        job_description,
+        job_google_link
+      }));
+      localStorage.setItem('jobs', JSON.stringify(jobs));
+      this.ngOnInit();
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
+  number(string: string): number {
+    return Number.parseInt(string)
+  }
+
+  onContribute(amount: number): void {
+    this.http.post('http://localhost:4242/checkout', {
+      amount: amount
+    }).subscribe(async (res: any) => {
+      let stripe = await loadStripe('pk_live_51N0mO6SI37IE5p6Umoh1ANmmNC5Pr7gsOEq0qX4GUCbKoFThkZoElqAFCLgFb6H6oa4fHFhqkk3HSNUE2h1Kpmty00KqkIIVnR');
+      stripe?.redirectToCheckout({
+        sessionId: res.id
       })
-      .catch(err => console.error('error:' + err));
-
+    })
   }
 
 }
