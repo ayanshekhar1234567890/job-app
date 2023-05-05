@@ -6,11 +6,15 @@
   <div class="w-full mt-4 overflow-y-scroll border border-gray-400 rounded-lg max-h-96">
     <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3">
       <div *ngFor="let job of jobs" class="p-4 bg-white rounded-lg shadow-md">
-        <h2 class="text-xl font-semibold">{{ job.job_title }}</h2>
-        <p class="w-4/5 text-gray-500 break-all">{{ job.job_description | titlecase }}</p>
-        <a href="{{ job.job_google_link }}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-500 dark:focus:ring-offset-2">
-          Apply Now
-        </a>
+        <div class="shadow-xl card w-96 bg-base-100">
+          <div class="card-body">
+            <h2 class="card-title">{{ job.job_title }}</h2>
+            <p>{{ job.job_description | titlecase }}</p>
+            <div class="justify-end card-actions">
+              <a class="btn btn-primary" href="{{ job.job_google_link }}">Apply Now</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
