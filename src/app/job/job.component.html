@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center justify-center min-h-screen ml-2 mr-2">
   <div class="flex flex-col items-center justify-center w-full space-y-4">
     <input type="text" class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Enter text here..." #input>
-    <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600" (click)="fetchJobs(input.value)">Submit</button>
+    <button type="submit" class="w-full px-4 py-2 text-white btn btn-primary" (click)="fetchJobs(input.value)">Submit</button>
   </div>
   <div class="w-full mt-4 overflow-y-scroll border border-gray-400 rounded-lg max-h-96">
     <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3">

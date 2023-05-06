@@ -9,7 +9,6 @@ import {
 import { Job } from './Job';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { loadStripe } from '@stripe/stripe-js';
-
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
@@ -66,9 +65,28 @@ export class JobComponent implements OnInit, OnDestroy {
     this.http.post('http://localhost:4242/checkout', {
       amount: amount
     }).subscribe(async (res: any) => {
-      let stripe = await loadStripe('pk_live_51N0mO6SI37IE5p6Umoh1ANmmNC5Pr7gsOEq0qX4GUCbKoFThkZoElqAFCLgFb6H6oa4fHFhqkk3HSNUE2h1Kpmty00KqkIIVnR');
+      let stripe: any = await loadStripe('pk_live_51N0mO6SI37IE5p6Umoh1ANmmNC5Pr7gsOEq0qX4GUCbKoFThkZoElqAFCLgFb6H6oa4fHFhqkk3HSNUE2h1Kpmty00KqkIIVnR');
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: [
+          {
+            price_data: {
+              currency: "inr",
+              product_data: {
+                name: "Basic plan",
+                images: [],
+              },
+              unit_amount: 100 * 100,
+            },
+            quantity: 1,
+          },
+        ],
+        mode: "subscription",
+        success_url: "http://localhost:4242/success.html",
+        cancel_url: "http://localhost:4242/cancel.html",
+      });
       stripe?.redirectToCheckout({
-        sessionId: res.id
+        sessionId: session.id
       })
     })
   }
