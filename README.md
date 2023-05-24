@@ -6,4 +6,4 @@ Sponsers for this app:
 
 <a href="https://www.thelearningnetwork.in/">The Learning Network (TLN)</a>
 
-A place very there are many things to learn.
+A place very there are many things to learn. Check it out if you want to learn something! Knowledge is the key to success.
