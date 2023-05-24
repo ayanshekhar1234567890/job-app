@@ -9,6 +9,8 @@ import {
 import { Job } from './Job';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { loadStripe } from '@stripe/stripe-js';
+
+
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
@@ -17,6 +19,7 @@ import { loadStripe } from '@stripe/stripe-js';
 })
 export class JobComponent implements OnInit, OnDestroy {
   jobs!: Job[];
+  authencicated = localStorage.getItem("authencicated")
 
   constructor(public changeDetectorRef: ChangeDetectorRef, private http: HttpClient) {
     this.jobs = JSON.parse(localStorage.getItem('jobs') ?? '[]');
@@ -89,6 +92,11 @@ export class JobComponent implements OnInit, OnDestroy {
         sessionId: session.id
       })
     })
+  }
+
+  account() {
+
+
   }
 
 }

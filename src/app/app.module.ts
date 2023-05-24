@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LocalJobsComponent } from './local-jobs/local-jobs.component';
 import { HttpClientModule } from '@angular/common/http';
+import {
+  SignupComponent
+} from './signup/signup.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,7 +25,8 @@ const routes: Routes = [
     JobComponent,
     HomeComponent,
     NavbarComponent,
-    LocalJobsComponent
+    LocalJobsComponent,
+    SignupComponent
   ],
   imports: [
     HttpClientModule,
