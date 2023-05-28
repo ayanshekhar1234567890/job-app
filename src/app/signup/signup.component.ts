@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { getAuth, createUserWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } from "firebase/auth";
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -19,6 +19,8 @@ export class SignupComponent {
         // The signed-in user info.
         const user = result.user;
         localStorage.setItem("authencicated", "true");
+        localStorage.setItem("userName", user.displayName || "undefined");
+        localStorage.setItem("userEmail", user.email || "undefined");
         this.router.navigate(['/jobs']);
         // IdP data available using getAdditionalUserInfo(result)
         // ...

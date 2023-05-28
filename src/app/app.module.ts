@@ -16,7 +16,8 @@ import {
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'jobs', component: JobComponent },
-  { path: 'localjobs', component: LocalJobsComponent }
+  { path: 'localjobs', component: LocalJobsComponent },
+  { path: 'signup', component: SignupComponent }
 ];
 
 @NgModule({

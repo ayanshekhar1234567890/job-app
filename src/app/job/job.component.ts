@@ -44,7 +44,11 @@ export class JobComponent implements OnInit, OnDestroy {
         'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
       }
     };
-
+    /**
+     * This block of code makes the request to the RapidAPI service and parses the response.
+     * The response is a JSON object that contains an array of jobs. The jobs are then stored in the browser's local storage.
+     * Finally, the ngOnInit() method is called to update the UI.
+     */
     try {
       const response = await fetch(url, options);
       const data = await response.json();
