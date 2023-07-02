@@ -19,7 +19,6 @@ import { loadStripe } from '@stripe/stripe-js';
 })
 export class JobComponent implements OnInit, OnDestroy {
   jobs!: Job[];
-  authencicated = localStorage.getItem("authencicated")
 
   constructor(public changeDetectorRef: ChangeDetectorRef, private http: HttpClient) {
     this.jobs = JSON.parse(localStorage.getItem('jobs') ?? '[]');
@@ -57,8 +56,19 @@ export class JobComponent implements OnInit, OnDestroy {
         job_description,
         job_google_link
       }));
-      localStorage.setItem('jobs', JSON.stringify(jobs));
-      this.ngOnInit();
+      
+      let increment = localStorage.getItem('increment');
+      if (increment) {
+        if (Number.parseInt(increment) == 1) {
+          alert("Buy Premium to get more jobs")
+          throw new Error("Buy Premium to get more jobs")
+        }
+      }
+      else {
+        localStorage.setItem('jobs', JSON.stringify(jobs));
+        localStorage.setItem('increment', "1");
+      }
+
     } catch (error) {
       console.error('Error:', error);
     }

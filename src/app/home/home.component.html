@@ -1,3 +1,20 @@
+<div class="form-control">
+  <label class="label">
+    <span class="label-text">Enter your email to verify</span>
+  </label>
+  <label class="input-group">
+    <span>Email</span>
+    <input type="text" placeholder="info@gmail.com" class="input input-bordered" />
+  </label>
+  <label class="label">
+    <span class="label-text">Enter your password to verify</span>
+  </label>
+  <label class="input-group">
+    <span>Password</span>
+    <input type="text" placeholder="Password@123" class="input input-bordered" />
+  </label>
+  <button class="btn btn-primary"></button>
+</div>
 <!-- component -->
 <section class="bg-white dark:bg-gray-800">
   <div class="container px-6 py-8 mx-auto">
@@ -39,7 +56,7 @@
             </svg>
 
             <span class="mx-4 text-gray-700 dark:text-gray-300"
-              >Not much job options (Mainly for Delhi, Mumbai, Banglore, etc.)</span
+              >Not many job options (Mainly for Delhi, Mumbai, Banglore, etc.)</span
             >
           </div>
 
@@ -159,12 +176,12 @@
 
         </div>
 
-        <button
+        <a
           class="mt-10 btn btn-primary"
-          (click)="buyBasic()"
+          routerLink="/basic"
         >
           Choose plan
-        </button>
+      </a>
       </div>
 
       <div
